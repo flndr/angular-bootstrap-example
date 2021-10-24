@@ -1,0 +1,19 @@
+.container {
+    display          : flex;
+    justify-content  : space-between;
+
+    background-color : lightgrey;
+}
+
+.nav {
+    display : flex;
+
+
+    a {
+        padding : 1rem;
+    }
+}
+
+.user {
+    padding : 1rem;
+}
