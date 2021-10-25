@@ -1,0 +1,13 @@
+<div class="login">
+    <div>
+        <label for="name">Name</label>
+        <input id="name" type="text" [formControl]="name">
+    </div>
+    <div>
+        <label for="pw">Password</label>
+        <input id="pw" type="text" [formControl]="pw">
+    </div>
+    <div>
+        <button [disabled]="isLoginButtonDisabled" (click)="logIn($event)">{{loginButtonText}}</button>
+    </div>
+</div>

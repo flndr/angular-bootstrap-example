@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-mobx-example": {
+    "angular-bootstrap-example": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-mobx-example",
+            "outputPath": "dist/angular-bootstrap-example",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,7 +28,9 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/app-load-error.html",
+              "src/config.json"
             ],
             "styles": [
               "src/styles.scss"
@@ -72,10 +74,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-mobx-example:build:production"
+              "browserTarget": "angular-bootstrap-example:build:production"
             },
             "development": {
-              "browserTarget": "angular-mobx-example:build:development"
+              "browserTarget": "angular-bootstrap-example:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +85,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-mobx-example:build"
+            "browserTarget": "angular-bootstrap-example:build"
           }
         },
         "test": {
@@ -107,5 +109,5 @@
       }
     }
   },
-  "defaultProject": "angular-mobx-example"
+  "defaultProject": "angular-bootstrap-example"
 }

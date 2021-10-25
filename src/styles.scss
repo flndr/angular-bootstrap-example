@@ -28,7 +28,7 @@ html, body {
 // custom styling
 
 button {
-    padding          : 1rem;
+    padding          : 0.75rem 1rem;
     background-color : cornflowerblue;
     color            : white;
     cursor           : pointer;
@@ -37,4 +37,16 @@ button {
     &:hover {
         background-color : #375fa6;
     }
+}
+
+label {
+    display : block;
+}
+
+input {
+    display       : block;
+    border        : 1px solid grey;
+    padding       : 0.5rem;
+    border-radius : 4px;
+    width         : 100%;
 }

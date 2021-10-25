@@ -4,7 +4,16 @@
         <a routerLink="/new-entry">New Entry</a>
         <a routerLink="/all-entries">All Entries</a>
     </div>
-    <div class="user">
-        {{authStatus}}
+    <div class="user" *ngIf="isBusy">
+        ...
+    </div>
+    <div class="user" *ngIf="!isBusy">
+      <div *ngIf="isLoggedIn && user">
+          {{user.firstname}} {{user.lastname}} |
+          <button (click)="logOut()">Logout</button>
+      </div>
+      <div *ngIf="!isLoggedIn">
+          <button>Login</button>
+      </div>
     </div>
 </div>

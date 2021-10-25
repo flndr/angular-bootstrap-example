@@ -1,1 +1,14 @@
-<p>all-entries works!</p>
+<div class="entries">
+
+    <h1>All Entries</h1>
+
+    <button (click)="load()">{{isBusy ? '...' : 'Load Entries'}}</button>
+
+    <div *ngIf="hasEntries">
+        <p>Entries: {{entries.length}}</p>
+        <pre><code>{{ entries | json}}</code></pre>
+        <button (click)="clear()">{{isBusy ? '...' : 'Clear'}}</button>
+    </div>
+
+
+</div>

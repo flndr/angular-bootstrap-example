@@ -13,8 +13,4 @@ export class HomepageComponent implements OnInit {
     ngOnInit() : void {
     }
     
-    logIn() {
-        this.authService.logIn();
-    }
-    
 }
