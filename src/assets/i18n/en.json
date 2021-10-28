@@ -1,0 +1,10 @@
+{
+
+    "pages.login.title"         : "Angular Bootstrap Project",
+    "pages.login.text"          : "An Angular project to start developing fast",
+    "pages.login.fieldName"     : "Username",
+    "pages.login.fieldPassword" : "Password",
+    "pages.login.button"        : "Login",
+
+    "components.footer.title"   : "Footer"
+}

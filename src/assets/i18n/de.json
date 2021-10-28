@@ -1,0 +1,11 @@
+{
+
+    "pages.login.title"         : "Angular Schnellstart Projekt",
+    "pages.login.text"          : "Ein Angular Projekt um schnell mit der Entwicklung zu starten",
+    "pages.login.fieldName"     : "Benutzername",
+    "pages.login.fieldPassword" : "Passwort",
+    "pages.login.button"        : "Anmelden",
+
+    "components.footer.title"   : "Fußzeile"
+
+}

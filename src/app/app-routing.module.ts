@@ -1,5 +1,6 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginLayoutComponent } from 'src/app/layouts/login-layout/login-layout.component';
 import { MainLayoutComponent }  from 'src/app/layouts/main-layout/main-layout.component';
 import { AllEntriesComponent }  from 'src/app/pages/all-entries/all-entries.component';
 import { ErrorComponent }       from 'src/app/pages/error/error.component';
@@ -30,7 +31,13 @@ const routes : Routes = [
     },
     {
         path      : 'login',
-        component : LoginComponent
+        component : LoginLayoutComponent,
+        children  : [
+            {
+                path      : '',
+                component : LoginComponent
+            }
+        ]
     },
     {
         path      : 'error',

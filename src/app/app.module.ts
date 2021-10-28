@@ -1,15 +1,20 @@
-import { HttpClientModule }    from '@angular/common/http';
-import { Provider }            from '@angular/core';
-import { MobxAngularModule }   from 'mobx-angular';
-import { APP_INITIALIZER }     from '@angular/core';
-import { NgModule }            from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule }       from '@angular/platform-browser';
-import { ApiService }          from 'src/app/services/api.service';
-import { AuthService }         from 'src/app/services/auth.service';
-import { BootStore }           from 'src/app/stores/boot.store';
-import { ConfigStore }         from 'src/app/stores/config.store';
-import { UserStore }           from 'src/app/stores/user.store';
+import { HttpClient }           from '@angular/common/http';
+import { HttpClientModule }     from '@angular/common/http';
+import { Provider }             from '@angular/core';
+import { TranslateLoader }      from '@ngx-translate/core';
+import { TranslateModule }      from '@ngx-translate/core';
+import { TranslateHttpLoader }  from '@ngx-translate/http-loader';
+import { MobxAngularModule }    from 'mobx-angular';
+import { APP_INITIALIZER }      from '@angular/core';
+import { NgModule }             from '@angular/core';
+import { ReactiveFormsModule }  from '@angular/forms';
+import { BrowserModule }        from '@angular/platform-browser';
+import { LoginLayoutComponent } from 'src/app/layouts/login-layout/login-layout.component';
+import { ApiService }           from 'src/app/services/api.service';
+import { AuthService }          from 'src/app/services/auth.service';
+import { BootStore }            from 'src/app/stores/boot.store';
+import { ConfigStore }          from 'src/app/stores/config.store';
+import { UserStore }            from 'src/app/stores/user.store';
 
 import { AppRoutingModule }    from './app-routing.module';
 import { AppComponent }        from './app.component';
@@ -62,12 +67,17 @@ const appBootOrder : Provider[] = [
     },
 ];
 
+export function HttpLoaderFactory( http : HttpClient ) {
+    return new TranslateHttpLoader( http );
+}
+
 @NgModule( {
     declarations : [
         AppComponent,
         HeaderComponent,
         FooterComponent,
         MainLayoutComponent,
+        LoginLayoutComponent,
         HomepageComponent,
         NewEntryComponent,
         AllEntriesComponent,
@@ -81,7 +91,14 @@ const appBootOrder : Provider[] = [
         ReactiveFormsModule,
         HttpClientModule,
         MobxAngularModule,
-    
+        TranslateModule.forRoot( {
+            defaultLanguage: 'de',
+            loader : {
+                provide    : TranslateLoader,
+                useFactory : HttpLoaderFactory,
+                deps       : [ HttpClient ]
+            }
+        } )
     ],
     providers    : [
         ...appBootOrder,

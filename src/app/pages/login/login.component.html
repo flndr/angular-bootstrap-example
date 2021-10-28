@@ -1,13 +1,20 @@
 <div class="login">
+
+    <h1>{{ 'pages.login.title' | translate }}</h1>
+    <p>{{ 'pages.login.text' | translate }}</p>
+
     <div>
-        <label for="name">Name</label>
+        <label for="name">{{ 'pages.login.fieldName' | translate }}</label>
         <input id="name" type="text" [formControl]="name">
     </div>
     <div>
-        <label for="pw">Password</label>
+        <label for="pw">{{ 'pages.login.fieldPassword' | translate }}</label>
         <input id="pw" type="text" [formControl]="pw">
     </div>
     <div>
-        <button [disabled]="isLoginButtonDisabled" (click)="logIn($event)">{{loginButtonText}}</button>
+        <button [disabled]="isLoginButtonDisabled" (click)="logIn($event)">
+            <span *ngIf="isBusy">...</span>
+            <span *ngIf="!isBusy">{{ 'pages.login.button' | translate }}</span>
+        </button>
     </div>
 </div>

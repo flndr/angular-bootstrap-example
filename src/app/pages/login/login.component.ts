@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         return this.authService.isBusy;
     }
     
-    get loginButtonText() {
-        return this.authService.isBusy ? '...' : 'Login';
+    get isBusy() {
+        return this.authService.isBusy ;
     }
 }

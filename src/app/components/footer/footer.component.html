@@ -1,1 +1,10 @@
-<div class="foot">footer</div>
+<div class="foot">
+    <div>
+        {{'components.footer.title' | translate}}
+    </div>
+    <div class="lang">
+        <button [disabled]="currentLang === 'en'" (click)="useLanguage('en')">en</button>
+        <button [disabled]="currentLang === 'de'" (click)="useLanguage('de')">de</button>
+    </div>
+
+</div>
