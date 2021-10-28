@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup }         from '@angular/forms';
+import { Validators }        from '@angular/forms';
+import { FormBuilder }       from '@angular/forms';
 import { FormControl }       from '@angular/forms';
 import { AuthService }       from 'src/app/services/auth.service';
 import { UserStore }         from 'src/app/stores/user.store';
@@ -10,15 +13,20 @@ import { UserStore }         from 'src/app/stores/user.store';
 } )
 export class LoginComponent implements OnInit {
     
-    name = new FormControl( '' );
-    pw   = new FormControl( '' );
+    form;
     
     constructor(
         private authService : AuthService,
-        private userStore : UserStore
+        private userStore : UserStore,
+        private fb : FormBuilder
     ) {
+    
+        this.form = new FormGroup({
+            username: new FormControl('', Validators.required),
+            password: new FormControl('', Validators.required),
+        });
         
-        console.log('LoginComponent constructed');
+        console.log( 'LoginComponent constructed' );
     }
     
     ngOnInit() : void {
@@ -27,8 +35,7 @@ export class LoginComponent implements OnInit {
     async logIn( $event : Event ) {
         $event.preventDefault();
         if ( !this.authService.isBusy ) {
-            const token = await this.authService.logIn( this.name.value, this.pw.value );
-            //await this.router.navigate( [ this.redirectAfterLogin ] );
+            //const token = await this.authService.logIn( this.name.value, this.pw.value );
             
         }
     }
@@ -38,6 +45,6 @@ export class LoginComponent implements OnInit {
     }
     
     get isBusy() {
-        return this.authService.isBusy ;
+        return this.authService.isBusy;
     }
 }

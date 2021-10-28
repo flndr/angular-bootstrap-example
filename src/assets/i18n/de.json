@@ -6,6 +6,16 @@
     "pages.login.fieldPassword" : "Passwort",
     "pages.login.button"        : "Anmelden",
 
-    "components.footer.title"   : "Fußzeile"
+    "components.footer.title"   : "Fußzeile",
 
+    "errors"                    : {
+        "form"    : {
+            "INVALID" : "Junge!"
+        },
+        "backend" : {
+            "INVALID"      : "Falsche Zugangsdaten",
+            "SERVER_ERROR" : "Server sagt nein, geh weiter"
+        }
+
+    }
 }

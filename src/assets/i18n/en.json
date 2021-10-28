@@ -6,5 +6,16 @@
     "pages.login.fieldPassword" : "Password",
     "pages.login.button"        : "Login",
 
-    "components.footer.title"   : "Footer"
+    "components.footer.title"   : "Footer",
+
+    "errors"                    : {
+        "form"    : {
+            "INVALID" : "Dude!"
+        },
+        "backend" : {
+            "INVALID"      : "Invalid credentials",
+            "SERVER_ERROR" : "Please try again later"
+        }
+
+    }
 }
