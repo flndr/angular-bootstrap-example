@@ -1,8 +1,8 @@
-import { Injectable }    from '@angular/core';
-import { Entry }         from 'src/app/models/Entry';
-import { User }          from 'src/app/models/User';
-import { ConfigService } from 'src/app/services/config.service';
-import { pause }         from 'src/app/util/pause';
+import { Injectable }  from '@angular/core';
+import { Entry }       from 'src/app/models/Entry';
+import { User }        from 'src/app/models/User';
+import { ConfigStore } from 'src/app/stores/config.store';
+import { pause }       from 'src/app/util/pause';
 
 @Injectable( {
     providedIn : 'root'
@@ -11,7 +11,7 @@ export class ApiService {
     
     private _token : string | null = null;
     
-    constructor( private configService : ConfigService ) { }
+    constructor( private configService : ConfigStore ) { }
     
     setToken( t : string | null ) {
         this._token = t;
@@ -21,7 +21,8 @@ export class ApiService {
         await this.fakeRequest( 'loadUserDetail' );
         return {
             firstname : 'Hans',
-            lastname  : 'Werner'
+            lastname  : 'Werner',
+            groups    : []
         };
     }
     

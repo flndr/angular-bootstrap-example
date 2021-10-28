@@ -1,1 +1,2 @@
-<router-outlet></router-outlet>
+<router-outlet *ngIf="isReady"></router-outlet>
+<div *ngIf="!isReady">loading...</div>

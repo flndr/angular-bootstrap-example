@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { User }              from 'src/app/models/User';
-import { AuthService }       from 'src/app/services/auth.service';
+import { Component }   from '@angular/core';
+import { User }        from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
+import { BootStore }   from 'src/app/stores/boot.store';
 
 @Component( {
     selector    : 'app-header',
     templateUrl : './header.component.html',
     styleUrls   : [ './header.component.scss' ]
 } )
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
     
-    constructor( private authService : AuthService ) { }
+    constructor(
+        private authService : AuthService,
+        public bootStore : BootStore
+    ) { }
     
-    ngOnInit() : void {
-    }
-    
+  
     get isBusy() {
         return this.authService.isBusy;
     }
@@ -26,7 +28,7 @@ export class HeaderComponent implements OnInit {
         return this.authService.user;
     }
     
-    logOut()  {
+    logOut() {
         return this.authService.logOut();
     }
     

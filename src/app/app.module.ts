@@ -1,13 +1,15 @@
 import { HttpClientModule }    from '@angular/common/http';
-import { HttpClient }          from '@angular/common/http';
+import { Provider }            from '@angular/core';
+import { MobxAngularModule }   from 'mobx-angular';
 import { APP_INITIALIZER }     from '@angular/core';
 import { NgModule }            from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule }       from '@angular/platform-browser';
-import { Router }              from '@angular/router';
 import { ApiService }          from 'src/app/services/api.service';
 import { AuthService }         from 'src/app/services/auth.service';
-import { ConfigService }       from 'src/app/services/config.service';
+import { BootStore }           from 'src/app/stores/boot.store';
+import { ConfigStore }         from 'src/app/stores/config.store';
+import { UserStore }           from 'src/app/stores/user.store';
 
 import { AppRoutingModule }    from './app-routing.module';
 import { AppComponent }        from './app.component';
@@ -19,37 +21,46 @@ import { NewEntryComponent }   from './pages/new-entry/new-entry.component';
 import { AllEntriesComponent } from './pages/all-entries/all-entries.component';
 import { LoginComponent }      from './pages/login/login.component';
 import { ErrorComponent }      from './pages/error/error.component';
+import { AwaitBootDirective }  from './directives/await-boot.directive';
 
-function initConfig( configService : ConfigService ) : () => Promise<void> {
-    
+const waitFor = ( callback : ( done : () => void ) => void ) => {
     return () => new Promise<void>( resolve => ( async () => {
-        
-        try {
-            await configService.load();
-            resolve();
-        } catch ( e ) {
-            // cant start app, when that fails, so we exit out:
-            window.location.href = '/app-load-error.html';
-        }
-        
+        await callback( resolve );
     } )() );
-    
 }
 
-function initAuth( authService : AuthService ) : () => Promise<void> {
-    
-    return () => new Promise<void>( resolve => ( async () => {
-        
-        try {
-            await authService.init();
-        } catch ( e ) {
-            await authService.logOut();
-        }
-        resolve();
-        
-    } )() );
-    
-}
+const hydrateConfig = ( configStore : ConfigStore ) => waitFor( async done => {
+    try {
+        await configStore.loadFromJson();
+        done();
+    } catch ( e ) {
+        // cant start app, when that fails, so we exit out:
+        window.location.href = '/app-load-error.html';
+    }
+} );
+
+const loadUserSession = ( authService : AuthService ) => waitFor( async done => {
+    try {
+        await authService.init();
+    } catch ( e ) {
+        await authService.logOut();
+    }
+    done();
+} );
+
+const appBootOrder : Provider[] = [
+    {
+        multi      : true,
+        provide    : APP_INITIALIZER,
+        useFactory : hydrateConfig,
+        deps       : [ ConfigStore ]
+    },
+    {
+        provide    : ApiService,
+        useFactory : loadUserSession,
+        deps       : [ ApiService ]
+    },
+];
 
 @NgModule( {
     declarations : [
@@ -61,38 +72,23 @@ function initAuth( authService : AuthService ) : () => Promise<void> {
         NewEntryComponent,
         AllEntriesComponent,
         LoginComponent,
-        ErrorComponent
+        ErrorComponent,
+        AwaitBootDirective
     ],
     imports      : [
         BrowserModule,
         AppRoutingModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        MobxAngularModule,
+    
     ],
     providers    : [
-        ConfigService,
-        {
-            provide    : APP_INITIALIZER,
-            useFactory : initConfig,
-            multi      : true,
-            deps       : [ ConfigService, Router ]
-        },
-        {
-            provide    : ApiService,
-            useFactory : ( configService : ConfigService ) => {
-                const apiService = new ApiService( configService );
-                return apiService;
-            },
-            deps       : [ ConfigService ],
-            multi      : false
-        },
+        ...appBootOrder,
+        ApiService,
         AuthService,
-        {
-            provide    : APP_INITIALIZER,
-            useFactory : initAuth,
-            multi      : true,
-            deps       : [ AuthService ]
-        },
+        ConfigStore,
+        UserStore,
     ],
     bootstrap    : [ AppComponent ]
 } )

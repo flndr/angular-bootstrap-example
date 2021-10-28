@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl }       from '@angular/forms';
 import { AuthService }       from 'src/app/services/auth.service';
+import { UserStore }         from 'src/app/stores/user.store';
 
 @Component( {
     selector    : 'app-login',
@@ -12,15 +13,22 @@ export class LoginComponent implements OnInit {
     name = new FormControl( '' );
     pw   = new FormControl( '' );
     
-    constructor( private authService : AuthService ) { }
+    constructor(
+        private authService : AuthService,
+        private userStore : UserStore
+    ) {
+        
+        console.log('LoginComponent constructed');
+    }
     
     ngOnInit() : void {
     }
     
-    logIn( $event : Event ) {
+    async logIn( $event : Event ) {
         $event.preventDefault();
         if ( !this.authService.isBusy ) {
-            this.authService.logIn( this.name.value, this.pw.value )
+            const token = await this.authService.logIn( this.name.value, this.pw.value );
+            //await this.router.navigate( [ this.redirectAfterLogin ] );
             
         }
     }
